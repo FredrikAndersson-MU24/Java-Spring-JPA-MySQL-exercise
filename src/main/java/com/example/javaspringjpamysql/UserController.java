@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.List;
 
 @RestController
@@ -18,7 +17,6 @@ public class UserController {
 
     public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
-        this.userRepository = userRepository;
     }
 
     @PostMapping
@@ -36,6 +34,14 @@ public class UserController {
         User user = userService.getUserById(id);
         if (user != null) {
             return ResponseEntity.ok(user);
+        } else throw new EntityNotFoundException();
+    }
+
+    @GetMapping("/name/{name}")
+    public List<User> getUsersByName(@PathVariable String name) {
+        List<User> users = userService.getUserByName(name);
+        if (!users.isEmpty()) {
+            return users;
         } else throw new EntityNotFoundException();
     }
 

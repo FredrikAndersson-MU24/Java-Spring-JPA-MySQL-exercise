@@ -27,6 +27,10 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
+    public List<User> getUserByName(String name) {
+        return userRepository.findByNameContainingIgnoreCase(name);
+    }
+
     public User updateUser(User userToUpdate) {
         return userRepository.findById(userToUpdate.getId()).map(u ->
         {
