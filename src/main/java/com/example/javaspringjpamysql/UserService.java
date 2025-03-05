@@ -37,7 +37,7 @@ public class UserService {
     }
 
     public User deleteUser(User userToDelete) {
-        User user = getUserById(userToDelete.getId());
+        User user = userRepository.findByIdAndNameAndEmail(userToDelete.getId(), userToDelete.getName(), userToDelete.getEmail());
         if (user != null) {
             userRepository.delete(userToDelete);
 

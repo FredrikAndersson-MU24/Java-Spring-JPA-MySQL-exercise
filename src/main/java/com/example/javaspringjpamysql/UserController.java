@@ -44,7 +44,7 @@ public class UserController {
         User user = userService.deleteUser(userToDelete);
         if (user != null) {
             return ResponseEntity.ok(user);
-        } else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/id/{id}")
