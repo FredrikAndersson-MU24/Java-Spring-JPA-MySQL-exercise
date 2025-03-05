@@ -3,6 +3,7 @@ package com.example.javaspringjpamysql;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -33,6 +34,19 @@ public class UserService {
             u.setEmail(userToUpdate.getEmail());
             return userRepository.save(u);
         }).orElse(null);
+    }
+
+    public User deleteUser(User userToDelete) {
+        User user = getUserById(userToDelete.getId());
+        if (user != null) {
+            userRepository.delete(userToDelete);
+
+        }
+        return user;
+    }
+
+    public void deleteUserById(long id) {
+        userRepository.deleteById(id);
     }
 
 }

@@ -2,9 +2,11 @@ package com.example.javaspringjpamysql;
 
 
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpResponse;
 import java.util.List;
 
 @RestController
@@ -33,8 +35,22 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<User> updateUser (@RequestBody User userToUpdate) {
+    public ResponseEntity<User> updateUser(@RequestBody @Valid User userToUpdate) {
         return ResponseEntity.ok(userService.updateUser(userToUpdate));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteUser(@RequestBody @Valid User userToDelete) {
+        User user = userService.deleteUser(userToDelete);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @DeleteMapping("/id/{id}")
+    public ResponseEntity<String> deleteUserById(@PathVariable long id) {
+        userService.deleteUserById(id);
+        return ResponseEntity.ok("User deleted");
     }
 
 }
