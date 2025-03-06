@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable long id) throws Exception {
+    public ResponseEntity<User> getUserById(@PathVariable long id) {
         User user = userService.getUserById(id);
         if (user != null) {
             return ResponseEntity.ok(user);
